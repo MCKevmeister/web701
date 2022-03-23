@@ -1,0 +1,6 @@
+# Project exclude paths
+/node-express-mongo/node_modules/
+/node-express-mongo/.idea/
+/node-express-mongo/package-lock.json
+
+/laravel-vue/public/js/app.js
