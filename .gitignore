@@ -4,3 +4,5 @@
 /node-express-mongo/package-lock.json
 
 /laravel-vue/public/js/app.js
+
+node_modules/
