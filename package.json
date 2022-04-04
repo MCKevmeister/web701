@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "laravel-mix-svelte": "github:wewowweb/laravel-mix-svelte"
+  }
+}
