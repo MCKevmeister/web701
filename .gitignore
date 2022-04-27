@@ -3,6 +3,7 @@
 /node-express-mongo/.idea/
 /node-express-mongo/package-lock.json
 
-/laravel-vue/public/js/app.js
+/laravel-vue/public/
+/laravel-svelte/public/
 
 node_modules/
