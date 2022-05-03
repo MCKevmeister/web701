@@ -19,7 +19,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Home', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -27,10 +27,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+//Route::resource('orders', ProductController::class);
+//Route::resource('tokens', TokenController::class);
 
-Route::resource('orders', ProductController::class);
-Route::resource('users', UserController::class);
-Route::resource('tokens', TokenController::class);
+Route::inertia('/products','AllProducts');

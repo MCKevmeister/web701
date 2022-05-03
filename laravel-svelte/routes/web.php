@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +20,8 @@ Route::inertia('/products','AllProducts');
 
 Route::inertia('/account', 'AccountDetails');
 
-Route::inertia('/login', 'Login');
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/login', [AuthController::class, 'index'])->name('index');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+});
