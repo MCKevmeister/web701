@@ -7,3 +7,4 @@
 /laravel-svelte/public/
 
 node_modules/
+/.idea/
