@@ -2,7 +2,7 @@
     import NavBar from "./Components/NavBar.svelte";
     import {useForm} from "@inertiajs/inertia-svelte";
 
-    let form = useForm({
+    let userRegistrationForm = useForm({
         name: null,
         email: null,
         password: null,//TODO: remove password verification on backend
@@ -10,7 +10,7 @@
     })
 
     function handleSubmit() {
-        $form.post("/register");
+        $userRegistrationForm.post("/register");
     }
 
 </script>
@@ -37,7 +37,7 @@
                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md
                                    shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500
                                    focus:border-indigo-500 sm:text-sm"
-                                   bind:value={$form.name}>
+                                   bind:value={$userRegistrationForm.name}>
                         </div>
                     </div>
                     <div>
@@ -51,7 +51,7 @@
                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md
                                    shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500
                                    focus:border-indigo-500 sm:text-sm"
-                                   bind:value={$form.email}>
+                                   bind:value={$userRegistrationForm.email}>
                         </div>
                     </div>
 
@@ -66,7 +66,7 @@
                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md
                                    shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500
                                    focus:border-indigo-500 sm:text-sm"
-                                   bind:value={$form.password}>
+                                   bind:value={$userRegistrationForm.password}>
                         </div>
                     </div>
                     <div>
@@ -78,10 +78,10 @@
                                     autocomplete="accountType"
                                     class="mt-1 max-w-lg block focus:ring-indigo-500 focus:border-indigo-500
                                     w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                                    bind:value={$form.accountType}>
+                                    bind:value={$userRegistrationForm.accountType}>
                                 <option>Beneficiary</option>
                                 <option>Volunteer</option>
-                                <option>Food Provider</option>
+                                <option>Food Producer</option>
                             </select>
                         </div>
                     </div>

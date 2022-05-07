@@ -4,7 +4,7 @@
     import NavBar from "./Components/NavBar.svelte";
     import Logo from "./Components/Logo.svelte";
 
-    export let auth;
+    // export let auth;
 
 </script>
 

@@ -5,7 +5,6 @@
     let form = useForm({
         email: null,
         password: null,
-
     })
 
 </script>
