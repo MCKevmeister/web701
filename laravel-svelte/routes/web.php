@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TokenController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,14 +17,48 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::inertia('/', 'Home');
 
-Route::inertia('/products','AllProducts');
+Route::group(['middleware' => ['web', 'auth:sanctum', 'verified']], function () {
+    Route::get('/admin', [AccountController::class, 'index']);
+});
 
 Route::inertia('/account', 'AccountDetails');
 
-Route::group(['middleware' => ['web']], function () {
-    Route::get('/login', [AuthController::class, 'index'])->name('index');
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::controller(ProductController::class)
+    ->middleware('web')
+    ->group(function () {
+        Route::get('/products', 'index');
+        Route::get('/products/{product}', 'show');
+    });
+
+Route::controller(LoginController::class)
+    ->middleware('web')
+    ->group(function () {
+        Route::get('/login', 'index');
+        Route::post('/login', 'login');
+        Route::get('/logout', 'logout');
+    });
+
+Route::controller(AccountController::class)
+    ->middleware('web')->group(function () {
+        Route::get('/register', 'index');
+        Route::post('/register', 'store');
+        Route::get('/account/', 'show'); //TODO
+        Route::post('/account/{user}/edit', 'update');//TODO
+    });
+
+Route::inertia('/get-token', 'GetToken'); //TODO
+
+Route::controller(TokenController::class)
+    ->middleware('web')->group(function () {
+        Route::get('/token', 'index');
+        Route::post('/token', 'store');
+        Route::get('/token/{token}', 'show');
+        Route::delete('/token/{token}', 'destroy');
+    });
+
+Route::post('/contact', function () {
+    return redirect('/');
 });
