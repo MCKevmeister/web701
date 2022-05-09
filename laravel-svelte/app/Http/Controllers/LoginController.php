@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Contracts\{Foundation\Application};
 use Illuminate\Http\{RedirectResponse, Request};
 use Illuminate\Routing\{Redirector};
 use Illuminate\Support\Facades\{Auth, Session};
 use Inertia\{Inertia, Response};
 
-class AuthController extends Controller
+class LoginController extends Controller
 {
     /**
      * Show the login form.
@@ -28,27 +30,39 @@ class AuthController extends Controller
      */
     public function login(Request $request): Response|Redirector|Application|RedirectResponse
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
 
-        if (!Auth::attempt($request->only(['email', 'password']))) {
-            return Inertia::render('Home');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended(RouteServiceProvider::HOME);
         }
 
-        return redirect("/login")->withErrors(['error' => 'Incorrect credentials']);
+        return back()->withErrors([
+            'email' => 'These credentials do not match our records.',
+        ])->onlyInput('email');
     }
 
     /**
      * Register the user.
      *
+     * @param $request
      * @return Redirector|Application|RedirectResponse
      */
     public function logout(): Redirector|Application|RedirectResponse
     {
-        Session::flush();
         Auth::logout();
-        return Redirect('/')->with('success', 'You are logged out!');
+
+        // Invalidate the session if the user is logged out.
+        Session::invalidate();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }
