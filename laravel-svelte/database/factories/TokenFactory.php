@@ -6,7 +6,7 @@ use App\Enum\AccountTypeEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Token>
+ * @extends Factory
  */
 class TokenFactory extends Factory
 {
@@ -21,7 +21,6 @@ class TokenFactory extends Factory
             'id' => $this->faker->uuid,
             'user_id' => UserFactory::create()->id,
             'value' => $this->faker->numerify('##'),
-            'account_type' => AccountTypeEnum::class->random(),
         ];
     }
 }
