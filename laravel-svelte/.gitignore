@@ -18,3 +18,4 @@ package-lock.json
 composer.lock
 /laravel-svelte/composer.lock
 /public
+/public/app.css
