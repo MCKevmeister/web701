@@ -19,3 +19,4 @@ composer.lock
 /laravel-svelte/composer.lock
 /public
 /public/app.css
+laravel-svelte/public/css/app.css
