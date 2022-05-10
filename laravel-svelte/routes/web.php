@@ -38,7 +38,7 @@ Route::controller(LoginController::class)
     ->group(function () {
         Route::get('/login', 'index');
         Route::post('/login', 'login');
-        Route::get('/logout', 'logout');
+        Route::post('/logout', 'logout');
     });
 
 Route::controller(AccountController::class)

@@ -1,8 +1,8 @@
 <script>
-    import { Link } from '@inertiajs/inertia-svelte'
+    import {inertia, page, Link} from '@inertiajs/inertia-svelte'
 
-    let foodCharityLogo = "https://raw.githubusercontent.com/MCKevmeister/web701/main/laravel-svelte/resources/images/FoodCharityLogo.png";
-    // export let auth = null;
+    let foodCharityLogo = "https://raw.githubusercontent.com/MCKevmeister/web701/main/laravel-svelte/resources/images/FoodCharityLogo.png"
+
 </script>
 
 <nav class="bg-gray-800">
@@ -16,15 +16,40 @@
                 </div>
                 <div class="sm:block sm:ml-6">
                     <div class="flex space-x-4">
-                        <Link href="/public" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</Link>
+                        <Link href="/"
+                              class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            Home
+                        </Link>
 
-                        <Link href="/products" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Products</Link>
+                        <Link href="/products"
+                              class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            Products
+                        </Link>
 
-                        <Link href="/account" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Account</Link>
+                        <Link href="/account"
+                              class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            Account
+                        </Link>
 
-                        <Link href="/login" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</Link>
-                        <!--{#if auth.id}-->
-                        <!--    <Link href="/logout" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</Link>-->
+                        {#if $page.props.user === null}
+                            <Link href="/login"
+                                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                Login
+                            </Link>
+                        {/if}
+
+                        {#if $page.props.user != null}
+                            <button use:inertia={{ href:'/logout', method: 'post', _blank: true }}
+                                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                Logout
+                            </button>
+                        {/if}
+
+                        <!--{#if $page.props.user.accountType === 'beneficiary'}-->
+                            <!--<Link href="/tokens"-->
+                                <!--class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">-->
+                                <!--Tokens-->
+<!--                        </Link>-->
                         <!--{/if}-->
                     </div>
                 </div>

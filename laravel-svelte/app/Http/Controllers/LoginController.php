@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Contracts\{Foundation\Application};
-use Illuminate\Http\{RedirectResponse, Request};
-use Illuminate\Routing\{Redirector};
-use Illuminate\Support\Facades\{Auth, Session};
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
 use Inertia\{Inertia, Response};
 
 class LoginController extends Controller
@@ -49,15 +49,12 @@ class LoginController extends Controller
     /**
      * Register the user.
      *
-     * @param $request
+     * @param \Illuminate\Http\Request $request
      * @return Redirector|Application|RedirectResponse
      */
-    public function logout(): Redirector|Application|RedirectResponse
+    public function logout(Request $request): Redirector|RedirectResponse|Application
     {
         Auth::logout();
-
-        // Invalidate the session if the user is logged out.
-        Session::invalidate();
 
         $request->session()->invalidate();
 

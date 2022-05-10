@@ -5,7 +5,7 @@
     let userRegistrationForm = useForm({
         name: null,
         email: null,
-        password: null,//TODO: remove password verification on backend
+        password: null,
         accountType: null,
     })
 
@@ -20,10 +20,10 @@
 <div class="h-full bg-gray-50">
     <div class="min-h-full flex flex-col justify-center py-4 sm:px-6 lg:px-8">
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <h2 class="my-6 text-center text-3xl font-extrabold text-gray-900">Account Details</h2>
+            <h2 class="my-6 text-center text-3xl font-extrabold text-gray-900">Register for an Account</h2>
             <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
                 <div class="flex justify-end text-sm">
-                    <a href="/register" class="font-medium justify-end text-indigo-600 hover:text-indigo-500"> Already have an account, Login? </a>
+                    <a href="/login" class="font-medium justify-end text-indigo-600 hover:text-indigo-500"> Already have an account, Login? </a>
                 </div>
                 <form class="space-y-6" on:submit|preventDefault={handleSubmit}>
                     <div>
