@@ -27,15 +27,15 @@ Route::group(['middleware' => ['web', 'auth:sanctum', 'verified']], function () 
 Route::inertia('/account', 'AccountDetails');
 
 Route::controller(ProductController::class)
-    ->middleware('web')
-    ->group(function () {
+    ->middleware('web')->group(function () {
         Route::get('/products', 'index');
         Route::get('/products/{product}', 'show');
+        Route::get('/product/create', 'create');
+        Route::post('/products', 'store');
     });
 
 Route::controller(LoginController::class)
-    ->middleware('web')
-    ->group(function () {
+    ->middleware('web')->group(function () {
         Route::get('/login', 'index');
         Route::post('/login', 'login');
         Route::post('/logout', 'logout');
@@ -45,18 +45,14 @@ Route::controller(AccountController::class)
     ->middleware('web')->group(function () {
         Route::get('/register', 'index');
         Route::post('/register', 'store');
-        Route::get('/account/', 'show'); //TODO
+        Route::get('/account/', 'show');
         Route::post('/account/{user}/edit', 'update');//TODO
     });
 
-Route::inertia('/get-token', 'GetToken'); //TODO
-
 Route::controller(TokenController::class)
     ->middleware('web')->group(function () {
-        Route::get('/token', 'index');
-        Route::post('/token', 'store');
-        Route::get('/token/{token}', 'show');
-        Route::delete('/token/{token}', 'destroy');
+        Route::get('/tokens', 'index');
+        Route::post('/tokens', 'store');
     });
 
 Route::post('/contact', function () {
