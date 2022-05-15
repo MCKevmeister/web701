@@ -17,7 +17,9 @@ class TokenFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'id' => $this->faker->uuid,
+            'user_id' => UserFactory::create()->id,
+            'value' => $this->faker->numerify('##'),
         ];
     }
 }

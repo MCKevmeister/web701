@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Token;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class TokenController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Inertia\Response
      */
     public function index()
     {
-        //
+        return Inertia::render('Token');
     }
 
     /**
@@ -30,11 +33,22 @@ class TokenController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'value' => 'required|numeric|min:1'
+        ]);
+
+        $user_id = Auth::user()->id;
+
+        Token::create([
+            'user_id' => $user_id,
+            'value' => $request->value
+        ]);
+
+        return redirect('/')->with('success', 'Token created successfully');
     }
 
     /**
