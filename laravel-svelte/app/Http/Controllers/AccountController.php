@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Fortify\CreateNewUser;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\{RedirectResponse, Request};
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
-use Inertia\{Inertia, Response, ResponseFactory};
+use Inertia\{Inertia, Response};
 
 class AccountController extends Controller
 {
     /**
      * Show the registration form.
      *
-     * @return Response|ResponseFactory
+     * @return Application|RedirectResponse|Redirector|Response
      */
-    public function index(): Response|ResponseFactory
+    public function index(): Response|Redirector|Application|RedirectResponse
     {
-        return inertia('Register');
+        return Inertia::render('Register');
     }
 
     /**
@@ -26,33 +29,37 @@ class AccountController extends Controller
      *
      * @param Request $request
      * @return Redirector|Application|RedirectResponse
+     * @throws Exception
      */
     public function store(Request $request): Redirector|Application|RedirectResponse
     {
-        $attributes = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6'
-        ]);
+        $newUser = new CreateNewUser();
+        $user = $newUser->create($request->all());
 
-        $user = User::create($attributes);
         Auth::login($user);
+        $request->session()->flash('success', 'You have successfully registered!');
 
-        return redirect('/')->with('success', 'You are logged in!');
+        return redirect(RouteServiceProvider::HOME);
     }
 
     /**
      * Show the user profile information.
      *
-     * @param User $user
-     * @return Response|ResponseFactory
+     * @return Application|Redirector|RedirectResponse|Response
      */
-    public function show(User $user): Response|ResponseFactory
+    public function show(): Response|Redirector|RedirectResponse|Application
     {
-        return Inertia::render('Profile', [
-            'User' => [
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        $user = Auth::user();
+
+        return inertia::render('AccountDetails', [
+            'user' => [
+                'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
+                'accountType' => $user->accountType,
             ]
         ]);
     }
@@ -68,7 +75,7 @@ class AccountController extends Controller
     {
         $attributes = $request->validate([
             'name' => ['required'],
-            'email' => ['required','email','unique:users,email']
+            'email' => ['required', 'email', 'unique:users,email']
         ]);
 
         $user->update($attributes);
