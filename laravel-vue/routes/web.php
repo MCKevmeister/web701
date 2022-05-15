@@ -2,10 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TokenController;
-use App\Http\Controllers\UserController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,16 +15,24 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+Route::inertia('/', 'Home');
+
+Route::inertia('/account', 'AccountDetails');
+
+Route::controller(ProductController::class)
+    ->middleware('web')->group(function () {
+        Route::get('/products', 'index');
+        Route::get('/products/{product}', 'show');
+        Route::get('/product/create', 'create');
+        Route::post('/products', 'store');
+    });
+
+Route::controller(TokenController::class)
+    ->middleware('web')->group(function () {
+        Route::get('/tokens', 'index');
+        Route::post('/tokens', 'store');
+    });
+
+Route::post('/contact', function () {
+    return redirect('/');
 });
-
-//Route::resource('orders', ProductController::class);
-//Route::resource('tokens', TokenController::class);
-
-Route::inertia('/products','AllProducts');
