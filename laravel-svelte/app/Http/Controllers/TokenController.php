@@ -13,18 +13,11 @@ class TokenController extends Controller
     /**
      * Returns all tokens
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|Response
+     * @return Response
      */
-    public function index()
+    public function index(): Response
     {
-        // if user type is not admin, redirect to home page
-        if (Auth::user()->type != 'admin') { //TODO: figure out how to do this
-            return redirect('/');
-        }
-        $tokens = Token::where('user_id', Auth::id())->get();
-        return Inertia::render('Tokens/Index', [
-            'tokens' => $tokens
-        ]);
+        return Inertia::render('Token');
     }
 
     /**
@@ -34,35 +27,29 @@ class TokenController extends Controller
      */
     public function create()
     {
-        // If user type is not admin, redirect to home page
-        if (Auth::user()->account_type != 'admin') { //TODO: figure out how to do this
-            return redirect('/');
-        }
-        return Inertia::render('TokensCreate');
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
-        // Validate the request
         $request->validate([
-            'user_id' => 'required|integer|exists:users,id',
             'value' => 'required|numeric|min:1'
         ]);
-        // Create the token
-        $token = new Token([
-            'user_id' => $request->user_id,
+
+        $user_id = Auth::user()->id;
+
+        Token::create([
+            'user_id' => $user_id,
             'value' => $request->value
         ]);
-        // Save the token
-        $token->save();
-        // Redirect to the tokens page
-        return redirect('/tokens');
+
+        return redirect('/')->with('success', 'Token created successfully');
     }
 
     /**
@@ -73,10 +60,7 @@ class TokenController extends Controller
      */
     public function show($id)
     {
-        $token = Token::find($id);
-        return Inertia::render('Tokens/Show', [
-            'token' => $token
-        ]);
+
     }
 
 //    /**

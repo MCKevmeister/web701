@@ -15,10 +15,9 @@ class Token extends Model
 
     protected $guarded = [];
 
-    public function assignedTo(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
+    private string $value;
+
+    private int $user_id;
 
     protected static function newFactory()
     {
