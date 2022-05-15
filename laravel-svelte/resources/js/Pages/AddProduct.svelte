@@ -3,14 +3,14 @@
     import {useForm} from "@inertiajs/inertia-svelte";
 
     let form = useForm({
-        name: null,
-        email: null,
-        password: null,//TODO: remove password verification on backend
-        accountType: null,
+        name: "",
+        description: "",
+        price: "",
+        imageSource: "",
     })
 
     function handleSubmit() {
-        $form.post("/register");
+        $form.post("/products");
     }
 
 </script>
@@ -20,11 +20,8 @@
 <div class="h-full bg-gray-50">
     <div class="min-h-full flex flex-col justify-center py-4 sm:px-6 lg:px-8">
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <h2 class="my-6 text-center text-3xl font-extrabold text-gray-900">Account Details</h2>
+            <h2 class="my-6 text-center text-3xl font-extrabold text-gray-900">New Product</h2>
             <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                <div class="flex justify-end text-sm">
-                    <a href="/register" class="font-medium justify-end text-indigo-600 hover:text-indigo-500"> Already have an account, Login? </a>
-                </div>
                 <form class="space-y-6" on:submit|preventDefault={handleSubmit}>
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700"> Name </label>
@@ -32,7 +29,6 @@
                             <input id="name"
                                    name="name"
                                    type="text"
-                                   autocomplete="name"
                                    required
                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md
                                    shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500
@@ -41,48 +37,42 @@
                         </div>
                     </div>
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700"> Email address </label>
+                        <label for="description" class="block text-sm font-medium text-gray-700"> Description </label>
                         <div class="mt-1">
-                            <input id="email"
-                                   name="email"
-                                   type="email"
-                                   autocomplete="email"
-                                   required
-                                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md
-                                   shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500
-                                   focus:border-indigo-500 sm:text-sm"
-                                   bind:value={$form.email}>
+                            <textarea id="description"
+                                      name="description"
+                                      rows="4"
+                                      required
+                                      class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md
+                                      shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500
+                                      focus:border-indigo-500 sm:text-sm"
+                                      bind:value={$form.description}></textarea>
                         </div>
                     </div>
 
                     <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700"> Password </label>
+                        <label for="price" class="block text-sm font-medium text-gray-700"> Price </label>
                         <div class="mt-1">
-                            <input id="password"
-                                   name="password"
-                                   type="password"
-                                   autocomplete="current-password"
+                            <input id="price"
+                                   name="price"
                                    required
                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md
                                    shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500
                                    focus:border-indigo-500 sm:text-sm"
-                                   bind:value={$form.password}>
+                                   bind:value={$form.price}>
                         </div>
                     </div>
                     <div>
-                        <label for="accountType" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                            Account type </label>
+                        <label for="imageSource" class="block text-sm font-medium text-gray-700"> Image Source </label>
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <select id="accountType"
-                                    name="accountType"
-                                    autocomplete="accountType"
-                                    class="mt-1 max-w-lg block focus:ring-indigo-500 focus:border-indigo-500
-                                    w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                                    bind:value={$form.accountType}>
-                                <option>Beneficiary</option>
-                                <option>Volunteer</option>
-                                <option>Food Producer</option>
-                            </select>
+                            <input id="imageSource"
+                                   name="imageSource"
+                                   type="text"
+                                   required
+                                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md
+                                   shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500
+                                   focus:border-indigo-500 sm:text-sm"
+                                   bind:value={$form.imageSource}>
                         </div>
                     </div>
                     <div>
@@ -91,7 +81,7 @@
                                     class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent
                                     shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700
                                     focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Save
+                                Add Product
                             </button>
                         </div>
                     </div>

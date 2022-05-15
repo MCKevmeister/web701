@@ -43,14 +43,16 @@
                                     class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                 Logout
                             </button>
+                            {#if $page.props.user.accountType === 'Beneficiary'}
+                                <Link href="/tokens"
+                                      class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                    Tokens
+                                </Link>
+                            {/if}
                         {/if}
 
-                        <!--{#if $page.props.user.accountType === 'beneficiary'}-->
-                            <!--<Link href="/tokens"-->
-                                <!--class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">-->
-                                <!--Tokens-->
-<!--                        </Link>-->
-                        <!--{/if}-->
+
+
                     </div>
                 </div>
             </div>

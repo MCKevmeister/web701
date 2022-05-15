@@ -1,11 +1,11 @@
 <script>
-    import NavBar from "./Components/NavBar.svelte";
+    import NavBar from "./Components/NavBar.svelte"
+    import {Link} from "@inertiajs/inertia-svelte";
 
-    export let userDetails = {
+    export let user = {
         id: null,
         name: null,
         email: null,
-        password: null,
         accountType: null
     }
 </script>
@@ -30,7 +30,7 @@
                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md
                                    shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500
                                    focus:border-indigo-500 sm:text-sm"
-                                   bind:value={$userDetails.name}>
+                                   bind:value={user.name}>
                         </div>
                     </div>
 
@@ -45,22 +45,7 @@
                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md
                                    shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500
                                    focus:border-indigo-500 sm:text-sm"
-                                   bind:value={$userDetails.email}>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700"> Password </label>
-                        <div class="mt-1">
-                            <input id="password"
-                                   name="password"
-                                   type="password"
-                                   autocomplete="current-password"
-                                   readonly
-                                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md
-                                   shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500
-                                   focus:border-indigo-500 sm:text-sm"
-                                   bind:value={$userDetails.password}>
+                                   bind:value={user.email}>
                         </div>
                     </div>
 
@@ -68,21 +53,31 @@
                         <label for="accountType" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                             Account type </label>
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <select id="accountType"
-                                    name="accountType"
-                                    autocomplete="accountType"
-                                    readonly
-                                    class="mt-1 max-w-lg block focus:ring-indigo-500 focus:border-indigo-500
-                                    w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                                    bind:value={$userDetails.accountType}>
-                            </select>
+                            <input id="accountType"
+                                   name="accountType"
+                                   type="text"
+                                   autocomplete="accountType"
+                                   readonly
+                                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md
+                                   shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500
+                                   focus:border-indigo-500 sm:text-sm"
+                                   bind:value={user.accountType}/>
                         </div>
                     </div>
 
+                    {#if user != null && user.accountType === 'Food Producer'}
+                        <div class="flex justify-end">
+                            <Link href="/product/create"
+                                  class="mt-4 w-full p-2 text-center text-white bg-indigo-500 rounded-md">
+                                Add a new product
+                            </Link>
+                        </div>
+
+                    {/if}
                     <div class="flex justify-end">
                         <button class="mt-4 w-full p-2 text-center text-white bg-indigo-500 rounded-md">
-                            <a href="/account/edit/{$userDetails.id}">
-                            <!--TODO: link to edit account page backend-->
+                            <a href="/account/edit/{user.id}">
+                                <!--TODO: link to edit account page backend-->
                                 Edit user details
                             </a>
                         </button>
