@@ -30,16 +30,16 @@
         </div>
     </div>
 
-        <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {#if products.length > 0}
-                {#each products as product}
-                    <ProductCard {...product}/>
-                {/each}
-            {:else}
-                <div class="text-center">
-                    <h3 class="text-lg font-medium text-gray-900">No products available</h3>
-                </div>
-            {/if}
-        </div>
+    <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+        {#if products.length > 0}
+            {#each products as product}
+                <ProductCard {...product}/>
+            {/each}
+        {:else}
+            <div class="text-center">
+                <h3 class="text-lg font-medium text-gray-900">No products available</h3>
+            </div>
+        {/if}
     </div>
+</div>
 
