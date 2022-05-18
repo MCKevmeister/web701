@@ -5,5 +5,5 @@ Accompanying Blogs can be found at [my blog](https://mckevmeister.github.io/WEB7
 # Assignments
 
 - [Design](https://github.com/MCKevmeister/web701/blob/main/WEB701%20Assignment%202.pdf)
-- [Evaluate]()
+- [Evaluate](https://github.com/MCKevmeister/web701/blob/main/WEB701_Evaluate.pdf)
 - [Develop]()
