@@ -1,18 +1,17 @@
 <script>
     import ProductCard from "./Components/ProductCard.svelte";
     import NavBar from "./Components/NavBar.svelte";
-    import {Inertia} from "@inertiajs/inertia";
-    import {throttle} from "lodash";
 
-    export let products;
-    export let searchQuery;
+    export let products = [];
+    export let searchQuery = "";
 
-    const search = throttle(() => {
-        Inertia.get('/products', {searchQuery}, {
-            preserveState: true,
-            replace: true
+    let filteredProducts =[];
+
+    const searchProducts = () => {
+        filteredProducts = products.filter(product => {
+            return product.name.toLowerCase().includes(searchQuery.toLowerCase());
         });
-    }, 500);
+    };
 </script>
 
 <NavBar/>
@@ -26,20 +25,27 @@
 
         <!--Search Bar-->
         <div class="search text-right mr-12 font-medium text-xl mt-10 2xs:mt-3 2xs:mr-0 2xs:text-center">
-            <input type="text" placeholder="Search..." class="border px-2 rounded-lg" bind:value={$searchQuery}>
+            <input type="text"
+                   placeholder="Search..."
+                   class="border px-2 rounded-lg"
+                   bind:value={searchQuery}
+                   on:input={searchProducts}>
         </div>
     </div>
-
+    <!-- Displays products based on search query -->
     <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-        {#if products.length > 0}
-            {#each products as product}
+        {#if searchQuery && filteredProducts.length === 0}
+            <div class="text-center">
+                <h3 class="text-lg font-medium text-gray-900">No products found</h3>
+            </div>
+        {:else if filteredProducts.length > 0}
+            {#each filteredProducts as product}
                 <ProductCard {...product}/>
             {/each}
         {:else}
-            <div class="text-center">
-                <h3 class="text-lg font-medium text-gray-900">No products available</h3>
-            </div>
+            {#each products as product}
+                <ProductCard {...product}/>
+            {/each}
         {/if}
     </div>
 </div>
-
